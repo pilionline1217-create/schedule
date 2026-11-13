@@ -19,6 +19,23 @@
 </style>
 </head>
 <body>
-<iframe src="https://script.google.com/macros/s/AKfycbyqkFQWddcEoWRnX6XZbS-I0FlLfBKHBeqwefQoBWiyRO1Nj6GnPXrAIHOUKbBLHcof/exec" title="賣當當週行程表" allow="clipboard-write"></iframe>
+<iframe id="app" title="賣當當週行程表" allow="clipboard-write"></iframe>
+<script>
+// 名字記在入口頁這邊（網址固定，不會因為程式更新而忘記）
+var BASE = "https://script.google.com/macros/s/AKfycbyqkFQWddcEoWRnX6XZbS-I0FlLfBKHBeqwefQoBWiyRO1Nj6GnPXrAIHOUKbBLHcof/exec";
+var MEMBERS = ["總監", "小男孩", "雜工"];
+var me = "";
+try { me = localStorage.getItem("wbMe") || ""; } catch (e) {}
+document.getElementById("app").src = BASE + (MEMBERS.indexOf(me) >= 0 ? "?me=" + encodeURIComponent(me) : "");
+window.addEventListener("message", function (ev) {
+  var host = "";
+  try { host = new URL(ev.origin).hostname; } catch (e) { return; }
+  if (host.slice(-22) !== ".googleusercontent.com") return;
+  var d = ev.data;
+  if (d && typeof d.wbMe === "string" && MEMBERS.indexOf(d.wbMe) >= 0) {
+    try { localStorage.setItem("wbMe", d.wbMe); } catch (e) {}
+  }
+});
+</script>
 </body>
 </html>

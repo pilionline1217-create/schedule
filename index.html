@@ -50,13 +50,22 @@ try { me = localStorage.getItem("wbMe") || ""; } catch (e) {}
 if (MEMBERS.indexOf(me) >= 0) document.getElementById("hello").textContent = me + "，今天也辛苦了";
 document.getElementById("app").src = BASE + (MEMBERS.indexOf(me) >= 0 ? "?me=" + encodeURIComponent(me) : "");
 function hideSplash() { document.getElementById("splash").className = "hide"; }
-setTimeout(hideSplash, 15000); // 保險：最多 15 秒就收起來
+// 讀取畫面至少停 2 秒、等照片也載好；最多 15 秒就收起來
+var t0 = Date.now(), appReady = false, photoReady = false;
+var photo = new Image();
+photo.onload = photo.onerror = function () { photoReady = true; maybeHide(); };
+photo.src = "https://lh3.googleusercontent.com/d/19z4_0vgidSUedVYD9uYk11qHNOnGQszP=w1080";
+function maybeHide() {
+  if (!appReady || !photoReady) return;
+  setTimeout(hideSplash, Math.max(0, 2000 - (Date.now() - t0)));
+}
+setTimeout(hideSplash, 15000);
 window.addEventListener("message", function (ev) {
   var host = "";
   try { host = new URL(ev.origin).hostname; } catch (e) { return; }
   if (host.slice(-22) !== ".googleusercontent.com") return;
   var d = ev.data || {};
-  if (d.wbReady) hideSplash();
+  if (d.wbReady) { appReady = true; maybeHide(); }
   if (typeof d.wbMe === "string" && MEMBERS.indexOf(d.wbMe) >= 0) {
     try { localStorage.setItem("wbMe", d.wbMe); } catch (e) {}
   }

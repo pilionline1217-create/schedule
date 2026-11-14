@@ -49,14 +49,9 @@ var me = "";
 try { me = localStorage.getItem("wbMe") || ""; } catch (e) {}
 // 叮嚀語：每次打開隨機挑一句
 var TIPS = [
-  "記得多喝水，別太累喔",
-  "慢慢來，一件一件做就好",
-  "再忙也要記得吃飯",
-  "做完的事記得打勾喔",
-  "食材要冰好，手要洗乾淨",
-  "累了就休息一下，沒關係的",
-  "出門前先看看今天要做什麼",
-  "收工前記得檢查一下爐火"
+  "做完的事請記得打勾",
+  "開班前先看看今天行程",
+  "收工前記得檢查"
 ];
 var tip = TIPS[Math.floor(Math.random() * TIPS.length)];
 document.getElementById("hello").textContent = (MEMBERS.indexOf(me) >= 0 ? me + "，" : "") + tip;

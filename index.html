@@ -17,7 +17,9 @@
   iframe{position:fixed;inset:0;width:100%;height:100%;border:0;
     padding-top:env(safe-area-inset-top,0px);box-sizing:border-box;background:#f6eee3}
   /* 讀取畫面 */
-  #splash{position:fixed;inset:0;z-index:2;background:#f6eee3;display:flex;flex-direction:column;
+  #splash{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;
+    background:linear-gradient(rgba(246,238,227,.55),rgba(246,238,227,.7)),
+      url("https://lh3.googleusercontent.com/d/19z4_0vgidSUedVYD9uYk11qHNOnGQszP=w1080") center/cover no-repeat,#f6eee3;
     align-items:center;justify-content:center;gap:14px;transition:opacity .4s;
     font-family:"Noto Sans TC",system-ui,-apple-system,"Microsoft JhengHei",sans-serif;color:#2b2622}
   #splash.hide{opacity:0;pointer-events:none}

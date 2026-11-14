@@ -47,7 +47,19 @@ var BASE = "https://script.google.com/macros/s/AKfycbyqkFQWddcEoWRnX6XZbS-I0FlLf
 var MEMBERS = ["總監", "小男孩", "雜工"];
 var me = "";
 try { me = localStorage.getItem("wbMe") || ""; } catch (e) {}
-if (MEMBERS.indexOf(me) >= 0) document.getElementById("hello").textContent = me + "，今天也辛苦了";
+// 叮嚀語：每次打開隨機挑一句
+var TIPS = [
+  "記得多喝水，別太累喔",
+  "慢慢來，一件一件做就好",
+  "再忙也要記得吃飯",
+  "做完的事記得打勾喔",
+  "食材要冰好，手要洗乾淨",
+  "累了就休息一下，沒關係的",
+  "出門前先看看今天要做什麼",
+  "收工前記得檢查一下爐火"
+];
+var tip = TIPS[Math.floor(Math.random() * TIPS.length)];
+document.getElementById("hello").textContent = (MEMBERS.indexOf(me) >= 0 ? me + "，" : "") + tip;
 document.getElementById("app").src = BASE + (MEMBERS.indexOf(me) >= 0 ? "?me=" + encodeURIComponent(me) : "");
 function hideSplash() { document.getElementById("splash").className = "hide"; }
 // 讀取畫面至少停 2 秒、等照片也載好；最多 15 秒就收起來
